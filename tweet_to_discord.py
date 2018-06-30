@@ -14,6 +14,7 @@ reply_flag = 0
 retweet_flag = 0
 favorite_count_threshold = 0
 retweet_count_threshold = 0
+query = ""
 collect_interval = 120
 stop_tweet = "bot停止"
 current_datetime = datetime.datetime.now()-datetime.timedelta(seconds=collect_interval)
@@ -66,6 +67,14 @@ def retweeted_tweets(tweets,retweet_count_threshold):
 
     return retweeted_tweets
 
+def post_query(tweets,query):
+    query_tweets = []
+    for i in tweets:
+        if query in i.text:
+            query_tweets.append(i)
+    
+    return query_tweets
+
 def post_to_discord(discord_webhook_url,tweet_text):
     msg = Webhook(discord_webhook_url,msg=tweet_text)
     msg.post()
@@ -82,6 +91,7 @@ if __name__ == '__main__':
         
         tweets = faved_tweets(tweets,favorite_count_threshold)
         tweets = retweeted_tweets(tweets,retweet_count_threshold)
+        tweets = post_query(tweets,query)
         for i in range(len(tweets)):
             j = len(tweets)-i-1
             post_to_discord(discord_webhook_url,tweets[j].text)
