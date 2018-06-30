@@ -16,7 +16,7 @@ favorite_count_threshold = 0
 retweet_count_threshold = 0
 collect_interval = 120
 stop_tweet = "bot停止"
-current_datetime = datetime.datetime(2018, 6, 30, 0, 0, 0)
+current_datetime = datetime.datetime.now()-datetime.timedelta(seconds=collect_interval)
 
 discord_webhook_url = ""
 
